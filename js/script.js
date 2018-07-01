@@ -85,6 +85,230 @@ function initForm(elem) {
 initForm(form);
 
 
+// Калькулятор
+
+
+let popup_calc_btn = document.getElementsByClassName('popup_calc_btn')[0],
+popup_calc = document.querySelector('.popup_calc'),
+popup_calc_close = document.querySelector('.popup_calc_close'),
+img_small = document.querySelectorAll('.balcon_icons a'),
+img_big = document.querySelectorAll('.big_img img'),
+calc_width = document.getElementById('width'),
+calc_height = document.getElementById('height'),
+popup_calc_button = document.querySelector('.popup_calc_button'),
+popup_calc_profile_button = document.querySelector('.popup_calc_profile_button'),
+popup_calc_profile = document.querySelector('.popup_calc_profile'),
+popup_calc_end = document.querySelector('.popup_calc_end'),
+popup_calc_end_close = document.querySelector('.popup_calc_end_close'),
+checkbox_cold = document.getElementById("cold"),
+checkbox_warm = document.getElementById("warm");
+
+
+popup_calc_btn.addEventListener('click', function() {
+	popup_calc.style.display = 'block';
+});
+
+popup_calc_close.addEventListener('click', function() {
+	popup_calc.style.display = 'none';
+});
+
+popup_calc_button.addEventListener('click', () => {
+	popup_calc.style.display = 'none';
+	popup_calc_profile.style.display = 'block';
+});
+
+popup_calc_profile_button.addEventListener('click', () => {
+	popup_calc_profile.style.display = 'none';
+	popup_calc_end.style.display = 'block';
+});
+
+popup_calc_end_close.addEventListener('click', () => {
+	popup_calc_end.style.display = 'none';
+});
+
+for (var i = 0; i < img_small.length; i++){
+	img_small[i].addEventListener('click', func);
+}
+
+function func(e) {
+	e.preventDefault();	
+	for(var j = 0; j < img_small.length; j++){
+		img_small[j].style.zoom = '1';
+	}
+	this.style.zoom = "1.3";	
+	
+	for(var i = 0; i < img_big.length; i++){
+		var img_elem_big = img_big[i].getAttribute('id');
+		var img_elem_small = this.getAttribute('class');		
+		if(img_elem_big != img_elem_small) {
+			img_big[i].style.display = 'none';
+		} else {
+			img_big[i].style.display = 'block';
+		}
+		
+	}
+}   
+
+calc_width.addEventListener('keypress', (e) => {
+	if(e.which < 48 || e.which > 57){
+		e.preventDefault();
+	}
+})
+
+calc_height.addEventListener('keypress', (e) => {
+	if(e.which < 48 || e.which > 57){
+		e.preventDefault();
+	}
+})
+
+checkbox_cold.addEventListener('change', () => {
+	checkbox_warm.checked = !checkbox_cold.checked;
+});
+
+checkbox_warm.addEventListener('change', () => {
+	checkbox_cold.checked = !checkbox_warm.checked;
+});
+
+
+//Табы с окнами
+
+let slick_tab = document.getElementsByClassName('slick_tab'),
+	glazing_slider = document.querySelector('.glazing_slider'),
+	slick_tab_content = document.getElementsByClassName('slick_tab_content');
+	
+
+	let hideTabsContent = (a) => {
+		for(var i = a; i < slick_tab_content.length; i++) {
+			slick_tab_content[i].classList.remove('show');
+			slick_tab_content[i].classList.add('hide');
+			slick_tab[i].classList.remove('active')
+		}
+	}
+	hideTabsContent(1);
+
+	let showTabContent = (b) => {
+		if(slick_tab_content[b].classList.contains('hide')) {
+			hideTabsContent(0);
+			slick_tab_content[b].classList.remove('hide');
+			slick_tab_content[b].classList.add('show');
+			slick_tab[b].classList.add('active')
+		}
+	}
+
+	glazing_slider.addEventListener('click', (event) => {
+		let target = event.target;
+		console.log(target);
+		if(target.className == 'slick_tab') {
+			for(var i = 0; i < slick_tab.length; i++) {
+				if(target == slick_tab[i]) {
+					showTabContent(i);
+					break;
+				}
+			}
+		}
+	});
+
+// Табы с отделкой
+
+let decor_tab = document.getElementsByClassName('decor_tab'),
+	decoration_slider = document.querySelector('.decoration_slider'),
+	decor_tab_content = document.getElementsByClassName('decor_tab_content'),
+	no_click = document.getElementsByClassName('no_click');
+
+	let hideDecorContent = (a) => {
+		for(var i = a; i < decor_tab_content.length; i++) {
+			decor_tab_content[i].classList.remove('show');
+			decor_tab_content[i].classList.add('hide');
+			no_click[i].classList.remove('after_click')
+		}
+	}
+	hideDecorContent(1);
+
+	let showDecorContent = (b) => {
+		if(decor_tab_content[b].classList.contains('hide')) {
+			hideDecorContent(0);
+			decor_tab_content[b].classList.remove('hide');
+			decor_tab_content[b].classList.add('show');
+			no_click[b].classList.add('after_click')
+		}
+	}
+
+	decoration_slider.addEventListener('click', (event) => {
+		let target = event.target;
+		console.log(target);
+		if(target.className == 'decor_tab') {
+			for(var i = 0; i < decor_tab.length; i++) {
+				if(target == decor_tab[i]) {
+					showDecorContent(i);
+					break;
+				}
+			}
+		}
+	});
+
+
+//Timer
+
+ var deadline = '2018-07-04';
+
+    getTimeRemaining = function getTimeRemaining(endtime)  {
+
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        var seconds = Math.floor( (t/1000) % 60);
+        var minutes = Math.floor( (t/1000 / 60) % 60);
+        var hours = Math.floor( (t/(1000*60*60)) );
+
+    return {
+        'total': t,
+        'days': days,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds
+    };
+};
+
+function setClock (id, endtime) {
+
+    var timer = document.getElementById(id);
+    var days = timer.querySelector('.days');
+var hours = timer.querySelector('.hours');
+var minutes = timer.querySelector('.minutes')
+var seconds = timer.querySelector('.seconds');
+
+function updateClock() {
+    var t = getTimeRemaining(endtime);
+    days.innerHTML = addZero(t.days);
+hours.innerHTML = addZero(t.hours);
+minutes.innerHTML = addZero(t.minutes);
+seconds.innerHTML = addZero(t.seconds);
+
+if(t.total <= 0){
+    clearInterval(timeInterval);
+    days.innerHTML = addZero(0);
+    hours.innerHTML = addZero(0);
+    minutes.innerHTML = addZero(0);
+    seconds.innerHTML = addZero(0);
+}
+};
+
+updateClock();
+var timeInterval = setInterval(updateClock, 1000)
+};
+
+setClock('timer', deadline);
+
+function addZero(num){
+    if(num <= 9) {
+        return '0' + num;
+    } else {
+        return num;
+    }
+}
+
+
+//
+
 
 
 })

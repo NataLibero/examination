@@ -745,6 +745,7 @@ textarea:focus {
 }
 .popup_calc_content .big_img img {
   display: none;
+  margin: 0 auto;
   margin-bottom: 3rem;
   width: 30rem;
 }
@@ -819,9 +820,12 @@ textarea:focus {
   margin-bottom: 1rem;
   outline: none;
 }
-.popup_calc_profile_content .checkbox {
-  display: none;
+.popup_calc_profile_content input{
+  display: inline-block;
 }
+/*.popup_calc_profile_content .checkbox {
+  display: none;
+}*/
 .popup_calc_profile_content .checkbox-custom {
   position: relative;
   width: 22px;
@@ -850,7 +854,7 @@ textarea:focus {
   background: url(../img/modal_calc/check_warm.png) center center no-repeat;
 }
 .popup_calc_profile_content .label {
-  padding: 1.3rem 2rem;
+  padding: 1.3rem 1.3rem;
   z-index: 18rem;
   color: #000000;
   font-size: 1.5rem;
@@ -1454,6 +1458,42 @@ textarea:focus {
     padding: 1rem 5rem;
   }
 }
+.timer{
+    background: white;
+    border: 1px solid #b2b2b2;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+}
+.timer-action{
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+#timer > div{
+    border-radius: 3px;
+    display: inline-block;
+    margin: 0 4px;
+}
+
+#timer div > span{
+    display: block;
+}
+#timer div .span-first{
+    font-size: 26px;
+    padding: 7px;
+    border-radius: 3px;
+    background: #555;
+    color: #fff;
+}
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+    color: #222;
+}
+
 /* small devices, tablets */
 @media only screen and (max-width: 768px) {
   .animated {
