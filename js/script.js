@@ -271,10 +271,6 @@ let decor_tab = document.getElementsByClassName('decor_tab'),
 let setClock = (id, endtime) => {
 
     let timer = document.getElementById(id);
-   // let days = timer.querySelector('.days');
-	//let hours = timer.querySelector('.hours');
-	//let minutes = timer.querySelector('.minutes')
-	//let seconds = timer.querySelector('.seconds');
 	let days_1 = timer.querySelector('.days_1');
 	let days_2 = timer.querySelector('.days_2');
 	let hours_1 = timer.querySelector('.hours_1');
