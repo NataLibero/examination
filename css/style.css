@@ -1483,7 +1483,8 @@ textarea:focus {
 }
 #timer div .span-first{
     font-size: 26px;
-    padding: 7px;
+    padding: 9px;
+    margin-left: -2px;
     border-radius: 3px;
     background: #555;
     color: #fff;

@@ -268,27 +268,44 @@ let decor_tab = document.getElementsByClassName('decor_tab'),
     };
 };
 
-function setClock (id, endtime) {
+let setClock = (id, endtime) => {
 
-    var timer = document.getElementById(id);
-    var days = timer.querySelector('.days');
-var hours = timer.querySelector('.hours');
-var minutes = timer.querySelector('.minutes')
-var seconds = timer.querySelector('.seconds');
+    let timer = document.getElementById(id);
+   // let days = timer.querySelector('.days');
+	//let hours = timer.querySelector('.hours');
+	//let minutes = timer.querySelector('.minutes')
+	//let seconds = timer.querySelector('.seconds');
+	let days_1 = timer.querySelector('.days_1');
+	let days_2 = timer.querySelector('.days_2');
+	let hours_1 = timer.querySelector('.hours_1');
+	let hours_2 = timer.querySelector('.hours_2');
+	let min_1 = timer.querySelector('.min_1');
+	let min_2 = timer.querySelector('.min_2');
+	let sec_1 = timer.querySelector('.sec_1');
+	let sec_2 = timer.querySelector('.sec_2');
 
-function updateClock() {
-    var t = getTimeRemaining(endtime);
-    days.innerHTML = addZero(t.days);
-hours.innerHTML = addZero(t.hours);
-minutes.innerHTML = addZero(t.minutes);
-seconds.innerHTML = addZero(t.seconds);
+let updateClock = () => {
+    let t = getTimeRemaining(endtime);
+    days_1.innerHTML = String(addZero(t.days)).split('')[0];
+    days_2.innerHTML = String(addZero(t.days)).split('')[1];	
+	hours_1.innerHTML = String(addZero(t.hours)).split('')[0];
+	hours_2.innerHTML = String(addZero(t.hours)).split('')[1];
+	min_1.innerHTML = String(addZero(t.minutes)).split('')[0];
+	min_2.innerHTML = String(addZero(t.minutes)).split('')[1];
+	sec_1.innerHTML = String(addZero(t.seconds)).split('')[0];
+	sec_2.innerHTML = String(addZero(t.seconds)).split('')[1];
+
 
 if(t.total <= 0){
     clearInterval(timeInterval);
-    days.innerHTML = addZero(0);
-    hours.innerHTML = addZero(0);
-    minutes.innerHTML = addZero(0);
-    seconds.innerHTML = addZero(0);
+    days_1.innerHTML = 0;
+    days_2.innerHTML = 0;
+    hours_1.innerHTML = 0;
+    hours_2.innerHTML = 0;
+    min_1.innerHTML = 0;
+    min_2.innerHTML = 0;
+    sec_1.innerHTML = 0;
+    sec_2.innerHTML = 0;
 }
 };
 
