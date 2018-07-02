@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
-
+var delay_popup = 60000;
+    setTimeout("document.querySelector('.popup').style.display='block'", delay_popup);
 //Модальное окно вызова
 
 let popup_engineer_btn = document.querySelector('.popup_engineer_btn'),
