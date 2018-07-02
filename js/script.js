@@ -28,7 +28,12 @@ message.loading = "Идет отправка...";
 message.success = "Отправлено";
 message.failure = "Ошибка";
 
-let form = document.getElementsByClassName('main_form')[0],
+let form1 = document.getElementsByClassName('main_form')[0],
+form2 = document.getElementsByClassName('main_form')[1],
+form3 = document.getElementsByClassName('main_form')[2],
+form4 = document.getElementsByClassName('main_form')[3],
+form5 = document.getElementsByClassName('main_form')[4],
+form6 = document.getElementsByClassName('main_form')[5],
 input = document.getElementsByTagName('input'),
 user_phone = document.getElementsByName('user_phone'),
 statusMessage = document.createElement('div');
@@ -45,13 +50,9 @@ function initForm(elem) {
 	}
 	elem.addEventListener('submit', function(e) {		
 		e.preventDefault();
-		var elem_name = form.user_name.value;
-		var elem_phone = form.user_phone.value;
 
 		elem.appendChild(statusMessage);
 		var formData = new FormData(elem);
-		formData.append("user_name", elem_name);
-		formData.append("user_phone", elem_phone);
 
 		function postData(data) {
 			var request = new XMLHttpRequest();
@@ -80,7 +81,12 @@ function initForm(elem) {
 		postData(formData);
 	})
 };
-initForm(form);
+initForm(form1);
+initForm(form2);
+initForm(form3);
+initForm(form4);
+initForm(form5);
+initForm(form6);
 
 
 // Калькулятор
