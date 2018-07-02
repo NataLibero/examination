@@ -77,9 +77,7 @@ function initForm(elem) {
 				input[i].value = '';
 			}
 		}
-
 		postData(formData);
-
 	})
 };
 initForm(form);
@@ -87,8 +85,7 @@ initForm(form);
 
 // Калькулятор
 
-
-let popup_calc_btn = document.getElementsByClassName('popup_calc_btn')[0],
+let popup_calc_btn = document.getElementsByClassName('popup_calc_btn'),
 popup_calc = document.querySelector('.popup_calc'),
 popup_calc_close = document.querySelector('.popup_calc_close'),
 img_small = document.querySelectorAll('.balcon_icons a'),
@@ -97,19 +94,24 @@ calc_width = document.getElementById('width'),
 calc_height = document.getElementById('height'),
 popup_calc_button = document.querySelector('.popup_calc_button'),
 popup_calc_profile_button = document.querySelector('.popup_calc_profile_button'),
+popup_calc_profile_close = document.querySelector('.popup_calc_profile_close'),
 popup_calc_profile = document.querySelector('.popup_calc_profile'),
 popup_calc_end = document.querySelector('.popup_calc_end'),
 popup_calc_end_close = document.querySelector('.popup_calc_end_close'),
 checkbox_cold = document.getElementById("cold"),
-checkbox_warm = document.getElementById("warm");
+checkbox_warm = document.getElementById("warm"),
+view_type = document.getElementById('view_type'),
+checkbox_val = document.querySelectorAll('.popup_calc_profile .checkbox');
 
-
-popup_calc_btn.addEventListener('click', function() {
-	popup_calc.style.display = 'block';
-});
+for(var j = 0; j < popup_calc_btn.length; j++) {
+	popup_calc_btn[j].addEventListener('click', function() {
+		popup_calc.style.display = 'block';
+	})
+}
 
 popup_calc_close.addEventListener('click', function() {
 	popup_calc.style.display = 'none';
+	clearData();
 });
 
 popup_calc_button.addEventListener('click', () => {
@@ -124,7 +126,27 @@ popup_calc_profile_button.addEventListener('click', () => {
 
 popup_calc_end_close.addEventListener('click', () => {
 	popup_calc_end.style.display = 'none';
+	clearData();
 });
+
+popup_calc_profile_close.addEventListener('click', () => {
+	popup_calc_profile.style.display = 'none';
+	clearData();
+})
+
+function clearData() {
+	calc_width.value = '';
+	calc_height.value = '';
+	view_type.value = "tree";
+	for(var i = 0; i < checkbox_val.length; i++) {			
+		if(checkbox_val[i].checked){
+				checkbox_val[i].checked = false;
+		}
+	}
+	for(let j = 0; j < input_calc.length; j++) {		
+		input_calc[j].value = '';			
+	}
+}
 
 for (var i = 0; i < img_small.length; i++){
 	img_small[i].addEventListener('click', func);
@@ -169,6 +191,72 @@ checkbox_warm.addEventListener('change', () => {
 	checkbox_cold.checked = !checkbox_warm.checked;
 });
 
+let message_calc = new Object();
+message_calc.loading = "Идет отправка...";
+message_calc.success = "Отправлено";
+message_calc.failure = "Ошибка";
+
+let form_calc = document.querySelector('.popup_calc_end .form'),
+	input_calc = form_calc.getElementsByTagName('input'),
+	statusMessage_calc = document.createElement('div');   
+
+let form_object = new Object();
+
+	form_calc.addEventListener('submit', function(event){
+		event.preventDefault();
+		form_calc.appendChild(statusMessage_calc);
+
+		var elem_name = form_calc.user_name.value;
+		var elem_phone = form_calc.user_phone.value;
+		var form_height = calc_height.value;
+		var form_width = calc_width.value;
+		var val_checkbox;
+		var selected_type = view_type.value;
+		
+		for(var k = 0; k < checkbox_val.length; k++) {			
+		if(checkbox_val[k].checked){
+				val_checkbox = checkbox_val[k].value;
+		}
+	};	    
+		
+		form_object.name = elem_name;
+		form_object.phone = elem_phone;
+		form_object.elemHeight = form_height;
+		form_object.elemWidth = form_width;
+		form_object.elemCheckbox = val_checkbox;
+		form_object.selectType = selected_type;	
+		
+		let request = new XMLHttpRequest();
+		request.open('POST', 'server.php');
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		let formData = new FormData(form_calc);	
+		formData.append("checkbox-test", form_object.elemCheckbox);
+		formData.append("width", form_object.elemWidth);
+		formData.append("height", form_object.elemHeight);
+		formData.append("view", form_object.selectType);
+
+		request.send(formData); 		
+
+		request.onreadystatechange = function() { 
+			if(request.readyState < 4) {
+				statusMessage_calc.innerHTML = message_calc.loading;
+			} else if (request.readyState === 4) {
+				if(request.status == 200 && request.status < 300) {
+					statusMessage_calc.innerHTML = message_calc.success;					
+				} else {
+					statusMessage_calc.innerHTML = message_calc.failure;
+				}
+			}
+		}
+		for(let i = 0; i < input_calc.length; i++) {
+			input_calc[i].value = '';			
+		}
+		for(key in form_object){
+			form_object[key] = null;
+		}		
+	});
+	
 
 //Табы с окнами
 
