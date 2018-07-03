@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', function(){
 var delay_popup = 60000;
     setTimeout("document.querySelector('.popup').style.display='block'", delay_popup);
+
 //Модальное окно вызова
 
 let popup_engineer_btn = document.querySelector('.popup_engineer_btn'),
@@ -14,8 +15,20 @@ popup_engineer_btn.addEventListener('click', () => {
 	popup_engineer.style.display = 'block';		
 });
 
-btn_close.addEventListener('click', () => {
-	popup_engineer.style.display = 'none';
+btn_close.addEventListener('click', () => {	
+	var style = getComputedStyle(statusmsg);
+	popup_engineer.style.display = 'none';	
+	if(style.display === 'block'){
+		clearMessage();
+	}	
+});
+
+popup_close.addEventListener('click', function() {
+    var style = getComputedStyle(statusmsg);		
+	popup.style.display = 'none';
+	if(style.display === 'block'){
+		clearMessage();
+	}	
 });
 
 window.onclick = function(event) {
@@ -28,15 +41,15 @@ window.onclick = function(event) {
 } 
 
 for(var i = 0; i < phone_link.length; i++) {
-	phone_link[i].addEventListener('click', function() {
+	phone_link[i].addEventListener('click', function(e) {
+		e.preventDefault();
 		popup.style.display = 'block';
 	});
 }
 
-popup_close.addEventListener('click', function() {
-	popup.style.display = 'none';
-});
-
+function clearMessage() {
+	statusmsg.parentNode.removeChild(statusmsg);
+}
 
 //Формы в модыльных окнах
 
@@ -131,10 +144,16 @@ function initForm(elem) {
 					statusMessage.innerHTML = message.loading;
 				} else if (request.readyState === 4) {
 
-					if(request.status == 200 && request.status < 300) {
-						statusMessage.innerHTML = message.success;					
+					if(request.status == 200 && request.status < 300) {						
+						statusMessage.innerHTML = message.success;
+						setTimeout(function() {
+							statusMessage.parentNode.removeChild(statusMessage);
+						}, 3000)				
 					} else {
 						statusMessage.innerHTML = message.failure;
+						setTimeout(function() {
+							statusMessage.parentNode.removeChild(statusMessage);
+						}, 3000)
 					}
 				}
 			}
@@ -161,6 +180,7 @@ let popup_calc_btn = document.getElementsByClassName('popup_calc_btn'),
 popup_calc = document.querySelector('.popup_calc'),
 popup_calc_close = document.querySelector('.popup_calc_close'),
 img_small = document.querySelectorAll('.balcon_icons a'),
+img_small_img = document.querySelectorAll('.balcon_icons a img'),
 img_big = document.querySelectorAll('.big_img img'),
 calc_width = document.getElementById('width'),
 calc_height = document.getElementById('height'),
@@ -183,22 +203,37 @@ for(var j = 0; j < popup_calc_btn.length; j++) {
 
 popup_calc_close.addEventListener('click', function() {
 	popup_calc.style.display = 'none';
+	for(var j = 0; j < img_small_img.length; j++){
+		img_small_img[j].classList.remove('img-transform');
+	}
 	clearData();
 });
 
 popup_calc_button.addEventListener('click', () => {
+	if(calc_width.value == '' || calc_height.value == ''){
+		return false;		
+	}
 	popup_calc.style.display = 'none';
 	popup_calc_profile.style.display = 'block';
 });
 
 popup_calc_profile_button.addEventListener('click', () => {
-	popup_calc_profile.style.display = 'none';
-	popup_calc_end.style.display = 'block';
+	for(var i = 0; i < checkbox_val.length; i++) {			
+		if(checkbox_val[i].checked == true){
+				popup_calc_profile.style.display = 'none';
+				popup_calc_end.style.display = 'block';				
+		}		
+	}
 });
 
 popup_calc_end_close.addEventListener('click', () => {
-	popup_calc_end.style.display = 'none';
-	clearData();
+	var st = getComputedStyle(statusMessage_calc);
+	popup_calc_end.style.display = 'none';	
+	clearData();		
+	if(st.display === "block"){
+		statusMessage_calc.parentNode.removeChild(statusMessage_calc);
+	}
+	
 });
 
 popup_calc_profile_close.addEventListener('click', () => {
@@ -226,10 +261,12 @@ for (var i = 0; i < img_small.length; i++){
 
 function func(e) {
 	e.preventDefault();	
-	for(var j = 0; j < img_small.length; j++){
-		img_small[j].style.zoom = '1';
+	console.log(e.target);
+	console.log(this)
+	for(var j = 0; j < img_small_img.length; j++){
+		img_small_img[j].classList.remove('img-transform');
 	}
-	this.style.zoom = "1.3";	
+	e.target.classList.add('img-transform');	
 	
 	for(var i = 0; i < img_big.length; i++){
 		var img_elem_big = img_big[i].getAttribute('id');
@@ -326,9 +363,8 @@ let form_object = new Object();
 		}
 		for(key in form_object){
 			form_object[key] = null;
-		}		
+		}				
 	});
-	
 
 //Табы с окнами
 
@@ -479,7 +515,6 @@ function addZero(num){
     }
 }
 
-
 //Картинки при клике
 
 var works_link = document.querySelectorAll('#work a'),
@@ -502,11 +537,12 @@ for(var l = 0; l < works_link.length; l++) {
 	})
 }
 
-window.onclick = function(event) {
+document.body.onclick = function(event) {
 	if (event.target == divWork) {
 		divWork.style.display = 'none'
-	}
-	//console.log(divWork)	
+	}	
 } 
+
+
 
 })
