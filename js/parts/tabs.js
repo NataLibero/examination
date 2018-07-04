@@ -24,8 +24,7 @@ var showTabContent = function showTabContent(b) {
 };
 
 glazing_slider.addEventListener('click', function (event) {
-	var target = event.target;
-	console.log(target);
+	var target = event.target;	
 	if (target.className == 'slick_tab') {
 		for (var i = 0; i < slick_tab.length; i++) {
 			if (target == slick_tab[i]) {
@@ -63,7 +62,6 @@ var showDecorContent = function showDecorContent(b) {
 
 decoration_slider.addEventListener('click', function (event) {
 	var target = event.target;
-	console.log(target);
 	if (target.className == 'decor_tab') {
 		for (var i = 0; i < decor_tab.length; i++) {
 			if (target == decor_tab[i]) {
