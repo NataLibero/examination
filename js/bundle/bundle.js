@@ -269,6 +269,7 @@ var form1 = document.getElementsByClassName('main_form')[0],
     form6 = document.getElementsByClassName('main_form')[5],
     input = document.getElementsByTagName('input'),
     user_phone = document.getElementsByName('user_phone'),
+    user_name = document.getElementsByName('user_name'),
     statusMessage = document.createElement('div');
 
 function initForm(elem) {
@@ -281,6 +282,17 @@ function initForm(elem) {
 			}
 		});
 	}
+
+	for(var i = 0; i < user_name.length; i++) {
+		user_name[i].addEventListener('keypress', function (e) {
+			for(var j = 0; j < user_name.length; j++) {				
+				 if (e.which < 1025 || e.which > 1105) {
+            		e.preventDefault();
+       			 }
+			}
+		});
+	}
+	
 	elem.addEventListener('submit', function (e) {
 		e.preventDefault();
 
